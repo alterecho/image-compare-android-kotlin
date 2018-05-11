@@ -4,5 +4,25 @@
     android:layout_height="match_parent"
     android:background="#ffa">
 
+    <fragment
+        android:id="@+id/fragment1"
+        class="vjc.com.imagecompare.ImageInspectorFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment2"
+        class="vjc.com.imagecompare.ImageInspectorFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+    </fragment>
+
 
 </LinearLayout>
