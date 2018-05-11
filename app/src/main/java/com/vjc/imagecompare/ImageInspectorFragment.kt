@@ -1,4 +1,4 @@
-package vjc.com.imagecompare
+package com.vjc.imagecompare
 
 import android.app.Fragment
 import android.graphics.Color

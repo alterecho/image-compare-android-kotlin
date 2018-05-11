@@ -1,4 +1,4 @@
-package vjc.com.imagecompare
+package com.vjc.imagecompare
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,7 +7,7 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
-import vjc.com.imagecompare.ImageView
+import com.vjc.imagecompare.ImageView
 
 fun PointF.byAdding(point: PointF): PointF = PointF(this.x + point.x, this.y + point.y)
 fun PointF.bySubtracting(point: PointF): PointF = PointF(this.x - point.x, this.y - point.y)
@@ -66,7 +66,7 @@ class ImageInspectorView : FrameLayout {
     }
 
 
-    private val _imageView: ImageView = vjc.com.imagecompare.ImageView(this.context)
+    private val _imageView: ImageView = com.vjc.imagecompare.ImageView(this.context)
     private var _touchPoint_began = PointF(0.0f, 0.0f)
     /** difference between where the the touch began and where _imageView position (center) */
     private var _touchPoint_offset = PointF()

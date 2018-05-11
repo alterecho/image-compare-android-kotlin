@@ -1,4 +1,4 @@
-package vjc.com.imagecompare
+package com.vjc.imagecompare
 
 import android.content.Context
 import android.support.test.InstrumentationRegistry
@@ -21,6 +21,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
 
-        assertEquals("vjc.com.imagecompare", appContext.packageName)
+        assertEquals("com.vjc.imagecompare", appContext.packageName)
     }
 }

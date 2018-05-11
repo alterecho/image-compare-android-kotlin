@@ -1,4 +1,4 @@
-package vjc.com.imagecompare
+package com.vjc.imagecompare
 
 import android.content.Context
 import android.graphics.Bitmap

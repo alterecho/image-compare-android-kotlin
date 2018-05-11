@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vjc.com.imagecompare">
+    package="com.vjc.imagecompare">
 
     <application
         android:allowBackup="true"
