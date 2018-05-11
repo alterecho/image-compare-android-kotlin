@@ -3,11 +3,11 @@ package vjc.com.imagecompare
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
-import android.widget.ImageView
-
+import vjc.com.imagecompare.ImageView
 class ImageInspectorView : FrameLayout {
 
     constructor(ctx: Context) : super(ctx){
@@ -20,18 +20,11 @@ class ImageInspectorView : FrameLayout {
 
     var bitmap: Bitmap? = null
     set(value) {
-        _imageView.setImageBitmap(field)
-        _imageView.layoutParams.width = 100
-        _imageView.layoutParams.height = 100
-        field?.let {
-            _imageView.layoutParams.width = it.width
-            _imageView.layoutParams.height = it.height
-        }
-        _imageView.requestLayout()
+        _imageView.bitmap = field
     }
 
 
-    private val _imageView: ImageView = ImageView(this.context)
+    private val _imageView: ImageView = vjc.com.imagecompare.ImageView(this.context)
 
     private fun init() {
         setBackgroundColor(Color.CYAN)
@@ -42,10 +35,33 @@ class ImageInspectorView : FrameLayout {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.let {
+            val touchPoint = PointF(it.x, it.y);
+            when (it.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    println("down")
+                    return true
+                }
 
-        when (event?.action) {
-            MotionEvent.ACTION_DOWN -> println("down")
+                MotionEvent.ACTION_POINTER_DOWN -> {
+
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    _imageView.position = touchPoint
+                }
+
+                MotionEvent.ACTION_POINTER_UP -> {
+
+                }
+
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+
+                }
+            }
         }
+
+
 
         return false
     }
