@@ -1,7 +1,8 @@
-package com.vjc.imagecompare
+package com.vjc.imagecompare.view
 
 import android.app.Activity
 import android.os.Bundle
+import com.vjc.imagecompare.R
 
 class CompareActivity constructor() : Activity() {
 

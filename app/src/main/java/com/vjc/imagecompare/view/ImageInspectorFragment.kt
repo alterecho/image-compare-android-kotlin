@@ -1,4 +1,4 @@
-package com.vjc.imagecompare
+package com.vjc.imagecompare.view
 
 import android.app.Fragment
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.vjc.imagecompare.R
 import java.util.*
 
 class ImageInspectorFragment constructor() : Fragment() {

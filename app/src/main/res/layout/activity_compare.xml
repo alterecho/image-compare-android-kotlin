@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.vjc.imagecompare.ImageInspectorFragment"
+        android:name="com.vjc.imagecompare.view.ImageInspectorFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.vjc.imagecompare.ImageInspectorFragment"
+        android:name="com.vjc.imagecompare.view.ImageInspectorFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
