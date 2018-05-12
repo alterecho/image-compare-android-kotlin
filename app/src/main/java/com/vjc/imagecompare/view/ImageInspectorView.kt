@@ -7,6 +7,7 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.util.Size
 import android.util.SizeF
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.widget.FrameLayout
@@ -29,10 +30,8 @@ class ImageInspectorView : FrameLayout, ScaleGestureDetector.OnScaleGestureListe
         _imageView.bitmap = field
     }
 
-
-
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        _gestureDetector.onTouchEvent(event)
         if (_scaleGestureDetector.onTouchEvent(event)) {
 //            return true
         }
@@ -121,6 +120,19 @@ class ImageInspectorView : FrameLayout, ScaleGestureDetector.OnScaleGestureListe
     private val _imageView: ImageView = ImageView(this.context)
 
     private val _scaleGestureDetector: ScaleGestureDetector = ScaleGestureDetector(this.context, this)
+    /** for double tap */
+    private val _gestureDetector: GestureDetector = GestureDetector(this.context, object : GestureDetector.SimpleOnGestureListener() {
+        //TODO: move all gestures to a single SimpleOnGestureDetector
+        override fun onDoubleTap(e: MotionEvent?): Boolean {
+            _imageView.toggleImageSize()
+            _imageView.post(object : Runnable {
+                override fun run() {
+                    _imageView.center()
+                }
+            })
+            return super.onDoubleTap(e)
+        }
+    })
 
     private var _touchPoint_down = PointF(0.0f, 0.0f)
     /** difference between where the the touch began and where _imageView position (center) */
@@ -148,6 +160,8 @@ class ImageInspectorView : FrameLayout, ScaleGestureDetector.OnScaleGestureListe
         this.bitmap = null
 
     }
+
+
 
 
 }
