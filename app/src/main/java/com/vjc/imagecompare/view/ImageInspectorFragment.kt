@@ -1,6 +1,7 @@
 package com.vjc.imagecompare.view
 
 import android.app.Fragment
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,8 @@ class ImageInspectorFragment constructor() : Fragment() {
         view?.let {
             val random = Random();
             it.setBackgroundColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
+
+            _imageInspectorView = it.findViewById<ImageInspectorView>(R.id.imageInspectorView)
 
             val addButton = it.findViewById<Button>(R.id.addButton)
             addButton.setOnClickListener(object : View.OnClickListener {
@@ -42,6 +45,7 @@ class ImageInspectorFragment constructor() : Fragment() {
             })
 
 
+
         }
 
 
@@ -50,6 +54,10 @@ class ImageInspectorFragment constructor() : Fragment() {
 
     fun addButtonAction() {
         println("addButtonAction");
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+
+        this.startActivityForResult(intent, _REQUEST_CODE_IMAGE_GALLERY)
     }
 
     fun cameraButtonAction() {
@@ -60,4 +68,21 @@ class ImageInspectorFragment constructor() : Fragment() {
         println("detailsButtonAction")
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            _REQUEST_CODE_IMAGE_GALLERY -> {
+                _imageInspectorView?.bitmapUri = data?.data
+            }
+        }
+    }
+
+    private var _imageInspectorView: ImageInspectorView? = null
+
+
+
+
 }
+
+private const val _REQUEST_CODE_IMAGE_GALLERY = 1

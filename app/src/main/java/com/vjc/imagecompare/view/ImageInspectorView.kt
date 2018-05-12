@@ -2,8 +2,10 @@ package com.vjc.imagecompare.view
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PointF
+import android.net.Uri
 import android.util.AttributeSet
 import android.util.Size
 import android.util.SizeF
@@ -26,8 +28,22 @@ class ImageInspectorView : FrameLayout, ScaleGestureDetector.OnScaleGestureListe
     }
 
     var bitmap: Bitmap? = null
+        get() = _imageView.bitmap
+
+        set(value) {
+            _imageView.bitmap = field
+        }
+
+    var bitmapUri: Uri? = null
     set(value) {
-        _imageView.bitmap = field
+        field = value
+        if (value != null) {
+
+        }
+        val pfd = this.context.contentResolver.openFileDescriptor(value, "r")
+        val fd = pfd.fileDescriptor
+        this.bitmap = BitmapFactory.decodeFileDescriptor(fd)
+        pfd.close()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
