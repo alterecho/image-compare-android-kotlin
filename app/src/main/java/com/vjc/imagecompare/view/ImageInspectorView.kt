@@ -5,13 +5,16 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PointF
 import android.util.AttributeSet
+import android.util.Size
+import android.util.SizeF
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.widget.FrameLayout
 import com.vjc.imagecompare.extensions.*
 import com.vjc.imagecompare.model.Pointer
 import kotlin.math.atan2
 
-class ImageInspectorView : FrameLayout {
+class ImageInspectorView : FrameLayout, ScaleGestureDetector.OnScaleGestureListener {
 
     constructor(ctx: Context) : super(ctx){
         init()
@@ -30,6 +33,10 @@ class ImageInspectorView : FrameLayout {
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (_scaleGestureDetector.onTouchEvent(event)) {
+//            return true
+        }
+
         event?.let {
             val p = PointF(it.x, it.y);
             var p2 = PointF()
@@ -44,7 +51,6 @@ class ImageInspectorView : FrameLayout {
 
             when (it.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
-                    println("down")
                     _touchPoint_down = p
                     _touchPoint_offset = p.bySubtracting(_imageView.position)
 
@@ -85,13 +91,37 @@ class ImageInspectorView : FrameLayout {
             }
         }
 
-
-
         return false
+    }
+
+    override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+        _startSize = SizeF(_imageView.width.toFloat(), _imageView.height.toFloat())
+        _scaleFactor = 1.0f;
+        return true
+    }
+
+    override fun onScale(detector: ScaleGestureDetector?): Boolean {
+        detector?.let {
+
+            _scaleFactor += it.scaleFactor - 1.0f;
+            println("${it.scaleFactor}, $_scaleFactor")
+            _imageView.layoutParams.height = (_startSize.width * _scaleFactor).toInt()
+            _imageView.layoutParams.width = (_startSize.height * _scaleFactor).toInt()
+            _imageView.requestLayout()
+            return true
+        }
+        return false
+    }
+
+    override fun onScaleEnd(detector: ScaleGestureDetector?) {
+
     }
 
 
     private val _imageView: ImageView = ImageView(this.context)
+
+    private val _scaleGestureDetector: ScaleGestureDetector = ScaleGestureDetector(this.context, this)
+
     private var _touchPoint_down = PointF(0.0f, 0.0f)
     /** difference between where the the touch began and where _imageView position (center) */
     private var _touchPoint_offset = PointF()
@@ -105,6 +135,11 @@ class ImageInspectorView : FrameLayout {
 
     /** the angle of the _imageView when thr rotation starts */
     private var _startAngle_imageView = 0.0f
+
+    /** start size of _imageView when scale scale gesture began */
+    private var _startSize = SizeF(0.0f, 0.0f)
+
+    private var _scaleFactor = 1.0f;
 
     private fun init() {
         setBackgroundColor(Color.CYAN)
